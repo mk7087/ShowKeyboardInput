@@ -9,7 +9,7 @@ Imports System.Runtime.InteropServices
 ' アセンブリ属性の値を確認します
 
 <Assembly: AssemblyTitle("ShowKeyboardInput")>
-<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyDescription("キーボードの入力を画面表示するソフトウェア")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("ShowKeyboardInput")>
 <Assembly: AssemblyCopyright("Copyright ©  2016 mk7087,shundroid All Rights Reserved")>
