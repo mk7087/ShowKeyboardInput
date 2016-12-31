@@ -13,9 +13,9 @@ Public Class Form1
         Me.Left = System.Windows.Forms.Screen.FromControl(Me).Bounds.Left
 
         globalHookManager = New GlobalHookManager()
-        AddHandler globalHookManager.KeyboardEvents, AddressOf keyHook_keyboardEvents
+        AddHandler globalHookManager.KeyDownEvents, AddressOf keyHook_keyDownEvents
     End Sub
-    Private Sub keyHook_keyboardEvents(sender As Object, e As KeyEventArgs)
-        MessageBox.Show(e.KeyValue)
+    Private Sub keyHook_keyDownEvents(sender As Object, e As KeyEventArgs)
+        MessageBox.Show(e.KeyCode.ToString())
     End Sub
 End Class

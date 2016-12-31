@@ -8,7 +8,8 @@ Public Class GlobalHookManager
 
     Private hookproc As CallBack
 
-    Public Event KeyboardEvents(sender As Object, e As KeyEventArgs)
+    Public Event KeyDownEvents(sender As Object, e As KeyEventArgs)
+    Public Event KeyUpEvents(sender As Object, e As KeyEventArgs)
 
     Private Delegate Function CallBack(nCode As Integer, wParam As IntPtr, lParam As IntPtr) As Integer
 
@@ -52,7 +53,6 @@ Public Class GlobalHookManager
 
     Private Function KeyboardHookProc _
         (nCode As Integer, wParam As IntPtr, lParam As IntPtr) As Integer
-        
         If (nCode < 0) Then
             Return CallNextHookEx(hHook, nCode, wParam, lParam)
         End If
@@ -61,13 +61,17 @@ Public Class GlobalHookManager
         hookStruct = CType(Marshal.PtrToStructure(lParam, hookStruct.GetType()), KeyboardLLHookStruct)
 
         Dim e As New KeyEventArgs(hookStruct.vkCode)
-        OnKeyboardEvents(e)
+        OnKeyboardEvents(e, wParam)
 
         Return CallNextHookEx(hHook, nCode, wParam, lParam)
     End Function
 
-    Protected Sub OnKeyboardEvents(ByVal e As KeyEventArgs)
-        RaiseEvent KeyboardEvents(Me, e)
+    Protected Sub OnKeyboardEvents(e As KeyEventArgs, wParam As IntPtr)
+        If wParam.ToInt32() = 257 Then
+            RaiseEvent KeyUpEvents(Me, e)
+        Else
+            RaiseEvent KeyDownEvents(Me, e)
+        End If
     End Sub
 
     Public Sub Dispose() Implements System.IDisposable.Dispose
